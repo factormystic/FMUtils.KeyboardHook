@@ -8,8 +8,12 @@
                                                  |___/                                                    
 
 
-### A lightweight wrapper for SetWindowsHookEx
+### A lightweight wrapper for SetWindowsHookEx for making simple keyboard hooks
 (but you can use it for whatever - see _license.txt_)
+
+
+### Nuget
+    Install-Package FMUtils.KeyboardHook
 
 
 ### State of the Code

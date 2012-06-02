@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/factormystic/FMUtils.KeyboardHook/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/factormystic/FMUtils.KeyboardHook#readme</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial package release</releaseNotes>
+    <copyright>Copyright 2011</copyright>
+    <tags>SetWindowsHookEx hook keyboard-hook</tags>
+  </metadata>
+</package>

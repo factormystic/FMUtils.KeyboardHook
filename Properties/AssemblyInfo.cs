@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("FMUtils.KeyboardHook")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A lightweight wrapper for SetWindowsHookEx")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("factormystic.net")]
 [assembly: AssemblyProduct("FMUtils.KeyboardHook")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.133.2337")]
-[assembly: AssemblyFileVersion("1.0.133.2337")]
+[assembly: AssemblyVersion("1.0.140.2145")]
+[assembly: AssemblyFileVersion("1.0.140.2145")]
