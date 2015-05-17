@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace FMUtils.KeyboardHook
@@ -41,8 +40,19 @@ namespace FMUtils.KeyboardHook
             this.isLWinPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_LWIN) & Win32.KEY_PRESSED) || this.Key == Keys.LWin;
             this.isRWinPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_RWIN) & Win32.KEY_PRESSED) || this.Key == Keys.RWin;
 
-            if (new[] { Keys.LMenu, Keys.RMenu, Keys.LControlKey, Keys.RControlKey, Keys.LShiftKey, Keys.RShiftKey, Keys.LWin, Keys.RWin }.Contains(this.Key))
-                this.Key = Keys.None;
+            switch (this.Key)
+            {
+                case Keys.LMenu:
+                case Keys.RMenu:
+                case Keys.LControlKey:
+                case Keys.RControlKey:
+                case Keys.LShiftKey:
+                case Keys.RShiftKey:
+                case Keys.LWin:
+                case Keys.RWin:
+                    this.Key = Keys.None;
+                    break;
+            }
         }
 
         public override string ToString()
