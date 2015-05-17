@@ -27,7 +27,7 @@ namespace FMUtils.KeyboardHook
             WH_MOUSE_LL = 14
         }
 
-        public struct KBDLLHOOKSTRUCT
+        internal struct KBDLLHOOKSTRUCT
         {
             public UInt32 vkCode;
             public UInt32 scanCode;
