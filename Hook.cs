@@ -32,11 +32,8 @@ namespace FMUtils.KeyboardHook
         }
         bool _ispaused = false;
 
-        public delegate void KeyDownEventDelegate(KeyboardHookEventArgs e);
-        public KeyDownEventDelegate KeyDownEvent = delegate { };
-
-        public delegate void KeyUpEventDelegate(KeyboardHookEventArgs e);
-        public KeyUpEventDelegate KeyUpEvent = delegate { };
+        public event EventHandler<KeyboardHookEventArgs> KeyDownEvent = delegate { };
+        public event EventHandler<KeyboardHookEventArgs> KeyUpEvent = delegate { };
 
         Win32.HookProc _hookproc;
         IntPtr _hhook;
@@ -76,10 +73,10 @@ namespace FMUtils.KeyboardHook
                 if (!isPaused && code >= 0)
                 {
                     if (wParam.ToInt32() == Win32.WM_SYSKEYDOWN || wParam.ToInt32() == Win32.WM_KEYDOWN)
-                        KeyDownEvent(new KeyboardHookEventArgs(lParam));
+                        KeyDownEvent(this, new KeyboardHookEventArgs(lParam));
 
                     if (wParam.ToInt32() == Win32.WM_SYSKEYUP || wParam.ToInt32() == Win32.WM_KEYUP)
-                        KeyUpEvent(new KeyboardHookEventArgs(lParam));
+                        KeyUpEvent(this, new KeyboardHookEventArgs(lParam));
                 }
             }
             finally

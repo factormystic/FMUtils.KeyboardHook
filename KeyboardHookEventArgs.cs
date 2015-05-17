@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FMUtils.KeyboardHook
 {
-    public class KeyboardHookEventArgs
+    public class KeyboardHookEventArgs : EventArgs
     {
         public Keys Key { get; private set; }
 
