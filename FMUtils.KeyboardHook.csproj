@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="Hook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FMUtils.KeyboardHook.snk" />
