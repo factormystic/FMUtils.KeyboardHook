@@ -1,31 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace FMUtils.KeyboardHook
 {
     public class KeyboardHookEventArgs
     {
-        #region PInvoke
-        [DllImport("user32.dll")]
-        static extern short GetKeyState(VirtualKeyStates nVirtKey);
-
-        private enum VirtualKeyStates : int
-        {
-            VK_LWIN = 0x5B,
-            VK_RWIN = 0x5C,
-            VK_LSHIFT = 0xA0,
-            VK_RSHIFT = 0xA1,
-            VK_LCONTROL = 0xA2,
-            VK_RCONTROL = 0xA3,
-            VK_LALT = 0xA4, //aka VK_LMENU
-            VK_RALT = 0xA5, //aka VK_RMENU
-        }
-
-        private const int KEY_PRESSED = 0x8000;
-        #endregion
-
         public Keys Key { get; private set; }
 
         public bool isAltPressed { get { return isLAltPressed || isRAltPressed; } }
@@ -49,17 +29,17 @@ namespace FMUtils.KeyboardHook
             this.Key = (Keys)lParam.vkCode;
 
             //Control.ModifierKeys doesn't capture alt/win, and doesn't have r/l granularity
-            this.isLAltPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_LALT) & KEY_PRESSED) || this.Key == Keys.LMenu;
-            this.isRAltPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_RALT) & KEY_PRESSED) || this.Key == Keys.RMenu;
+            this.isLAltPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_LALT) & Win32.KEY_PRESSED) || this.Key == Keys.LMenu;
+            this.isRAltPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_RALT) & Win32.KEY_PRESSED) || this.Key == Keys.RMenu;
 
-            this.isLCtrlPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_LCONTROL) & KEY_PRESSED) || this.Key == Keys.LControlKey;
-            this.isRCtrlPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_RCONTROL) & KEY_PRESSED) || this.Key == Keys.RControlKey;
+            this.isLCtrlPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_LCONTROL) & Win32.KEY_PRESSED) || this.Key == Keys.LControlKey;
+            this.isRCtrlPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_RCONTROL) & Win32.KEY_PRESSED) || this.Key == Keys.RControlKey;
 
-            this.isLShiftPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_LSHIFT) & KEY_PRESSED) || this.Key == Keys.LShiftKey;
-            this.isRShiftPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_RSHIFT) & KEY_PRESSED) || this.Key == Keys.RShiftKey;
+            this.isLShiftPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_LSHIFT) & Win32.KEY_PRESSED) || this.Key == Keys.LShiftKey;
+            this.isRShiftPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_RSHIFT) & Win32.KEY_PRESSED) || this.Key == Keys.RShiftKey;
 
-            this.isLWinPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_LWIN) & KEY_PRESSED) || this.Key == Keys.LWin;
-            this.isRWinPressed = Convert.ToBoolean(GetKeyState(VirtualKeyStates.VK_RWIN) & KEY_PRESSED) || this.Key == Keys.RWin;
+            this.isLWinPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_LWIN) & Win32.KEY_PRESSED) || this.Key == Keys.LWin;
+            this.isRWinPressed = Convert.ToBoolean(Win32.GetKeyState(Win32.VirtualKeyStates.VK_RWIN) & Win32.KEY_PRESSED) || this.Key == Keys.RWin;
 
             if (new[] { Keys.LMenu, Keys.RMenu, Keys.LControlKey, Keys.RControlKey, Keys.LShiftKey, Keys.RShiftKey, Keys.LWin, Keys.RWin }.Contains(this.Key))
                 this.Key = Keys.None;

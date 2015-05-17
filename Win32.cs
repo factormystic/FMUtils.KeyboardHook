@@ -83,5 +83,22 @@ namespace FMUtils.KeyboardHook
         /// <param name="lParam">The repeat count, scan code, extended-key flag, context code, previous key-state flag, and transition-state flag. For more information about the lParam parameter, see Keystroke Message Flags.</param>
         /// <returns>If code is less than zero, the hook procedure must return the value returned by CallNextHookEx. If code is greater than or equal to zero, and the hook procedure did not process the message, it is highly recommended that you call CallNextHookEx and return the value it returns; otherwise bad stuff.</returns>
         internal delegate int HookProc(int code, IntPtr wParam, ref KBDLLHOOKSTRUCT lParam);
+
+        [DllImport("user32.dll")]
+        internal static extern short GetKeyState(VirtualKeyStates nVirtKey);
+
+        internal enum VirtualKeyStates : int
+        {
+            VK_LWIN = 0x5B,
+            VK_RWIN = 0x5C,
+            VK_LSHIFT = 0xA0,
+            VK_RSHIFT = 0xA1,
+            VK_LCONTROL = 0xA2,
+            VK_RCONTROL = 0xA3,
+            VK_LALT = 0xA4, //aka VK_LMENU
+            VK_RALT = 0xA5, //aka VK_RMENU
+        }
+
+        internal const int KEY_PRESSED = 0x8000;
     }
 }
