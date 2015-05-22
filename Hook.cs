@@ -21,12 +21,6 @@ namespace FMUtils.KeyboardHook
             }
             set
             {
-                if (value != _ispaused && value == true)
-                    StopHook();
-
-                if (value != _ispaused && value == false)
-                    StartHook();
-
                 _ispaused = value;
             }
         }
