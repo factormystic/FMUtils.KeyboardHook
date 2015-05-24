@@ -53,7 +53,7 @@ namespace FMUtils.KeyboardHook
 
         private void StopHook()
         {
-            Trace.WriteLine(string.Format("Stopping hook '{0}'...", Name), string.Format("Hook.StartHook [{0}]", Thread.CurrentThread.Name));
+            Trace.WriteLine(string.Format("Stopping hook '{0}'...", Name), string.Format("Hook.StopHook [{0}]", Thread.CurrentThread.Name));
 
             Win32.UnhookWindowsHookEx(_hhook);
         }
