@@ -13,18 +13,7 @@ namespace FMUtils.KeyboardHook
         /// <summary>
         /// When true, suspends firing of the hook notification events
         /// </summary>
-        public bool isPaused
-        {
-            get
-            {
-                return _ispaused;
-            }
-            set
-            {
-                _ispaused = value;
-            }
-        }
-        bool _ispaused = false;
+        public bool isPaused { get; set; }
 
         public event EventHandler<KeyboardHookEventArgs> KeyDownEvent = delegate { };
         public event EventHandler<KeyboardHookEventArgs> KeyUpEvent = delegate { };
