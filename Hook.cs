@@ -72,11 +72,17 @@ namespace FMUtils.KeyboardHook
             {
                 if (!isPaused && code >= 0)
                 {
-                    if (wParam.ToInt32() == Win32.WM_SYSKEYDOWN || wParam.ToInt32() == Win32.WM_KEYDOWN)
-                        KeyDownEvent(this, new KeyboardHookEventArgs(lParam));
-
-                    if (wParam.ToInt32() == Win32.WM_SYSKEYUP || wParam.ToInt32() == Win32.WM_KEYUP)
-                        KeyUpEvent(this, new KeyboardHookEventArgs(lParam));
+                    switch (wParam.ToInt32())
+                    {
+                        case Win32.WM_SYSKEYDOWN:
+                        case Win32.WM_KEYDOWN:
+                            KeyDownEvent(this, new KeyboardHookEventArgs(lParam));
+                            break;
+                        case Win32.WM_SYSKEYUP:
+                        case Win32.WM_KEYUP:
+                            KeyUpEvent(this, new KeyboardHookEventArgs(lParam));
+                            break;
+                    }
                 }
             }
             finally

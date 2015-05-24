@@ -36,11 +36,11 @@ namespace FMUtils.KeyboardHook
             public IntPtr extraInfo;
         }
 
-        internal static int WM_KEYDOWN = 0x100;
-        internal static int WM_KEYUP = 0x101;
+        internal const int WM_KEYDOWN = 0x100;
+        internal const int WM_KEYUP = 0x101;
 
-        internal static int WM_SYSKEYDOWN = 0x0104;
-        internal static int WM_SYSKEYUP = 0x105;
+        internal const int WM_SYSKEYDOWN = 0x0104;
+        internal const int WM_SYSKEYUP = 0x105;
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr GetModuleHandle(string lpModuleName);
