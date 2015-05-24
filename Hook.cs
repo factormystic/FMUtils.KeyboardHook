@@ -35,12 +35,12 @@ namespace FMUtils.KeyboardHook
         public Hook(string name)
         {
             Name = name;
-            StartHook();
+            InstallHook();
         }
 
-        private void StartHook()
+        void InstallHook()
         {
-            Trace.WriteLine(string.Format("Starting hook '{0}'...", Name), string.Format("Hook.StartHook [{0}]", Thread.CurrentThread.Name));
+            Trace.WriteLine(string.Format("Starting hook '{0}'...", Name), string.Format("Hook.InstallHook [{0}]", Thread.CurrentThread.Name));
 
             _hhook = Win32.SetWindowsHookEx(Win32.HookType.WH_KEYBOARD_LL, new Win32.HookProc(HookCallback), Win32.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName), 0);
             if (_hhook == IntPtr.Zero)
@@ -49,9 +49,9 @@ namespace FMUtils.KeyboardHook
             }
         }
 
-        private void StopHook()
+        void UninstallHook()
         {
-            Trace.WriteLine(string.Format("Stopping hook '{0}'...", Name), string.Format("Hook.StopHook [{0}]", Thread.CurrentThread.Name));
+            Trace.WriteLine(string.Format("Stopping hook '{0}'...", Name), string.Format("Hook.UninstallHook [{0}]", Thread.CurrentThread.Name));
 
             if (_hhook == IntPtr.Zero)
                 return;
@@ -64,7 +64,7 @@ namespace FMUtils.KeyboardHook
             _hhook = IntPtr.Zero;
         }
 
-        private int HookCallback(int code, IntPtr wParam, ref Win32.KBDLLHOOKSTRUCT lParam)
+        int HookCallback(int code, IntPtr wParam, ref Win32.KBDLLHOOKSTRUCT lParam)
         {
             int result = 0;
 
@@ -100,7 +100,7 @@ namespace FMUtils.KeyboardHook
 
         void Dispose(bool isDisposing)
         {
-            StopHook();
+            UninstallHook();
         }
     }
 }
