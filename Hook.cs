@@ -18,6 +18,9 @@ namespace FMUtils.KeyboardHook
         public event EventHandler<KeyboardHookEventArgs> KeyDownEvent = delegate { };
         public event EventHandler<KeyboardHookEventArgs> KeyUpEvent = delegate { };
 
+        // note: this field is here on purpose!!!
+        // we have to keep a reference to the delegate passed to SetWindowsHookEx to keep it from being garbage collected
+        Win32.HookProc _hookproc;
         IntPtr _hhook = IntPtr.Zero;
 
 
@@ -31,7 +34,8 @@ namespace FMUtils.KeyboardHook
         {
             Trace.WriteLine(string.Format("Starting hook '{0}'...", Name), string.Format("Hook.InstallHook [{0}]", Thread.CurrentThread.Name));
 
-            _hhook = Win32.SetWindowsHookEx(Win32.HookType.WH_KEYBOARD_LL, new Win32.HookProc(HookCallback), Win32.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName), 0);
+            _hookproc = new Win32.HookProc(HookCallback);
+            _hhook = Win32.SetWindowsHookEx(Win32.HookType.WH_KEYBOARD_LL, _hookproc, Win32.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName), 0);
             if (_hhook == IntPtr.Zero)
             {
                 Win32Exception LastError = new Win32Exception(Marshal.GetLastWin32Error());
