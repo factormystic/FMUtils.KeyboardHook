@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace FMUtils.KeyboardHook
 {
-    public class Hook
+    public sealed class Hook : IDisposable
     {
         public string Name { get; private set; }
 
@@ -29,7 +29,7 @@ namespace FMUtils.KeyboardHook
         public event EventHandler<KeyboardHookEventArgs> KeyDownEvent = delegate { };
         public event EventHandler<KeyboardHookEventArgs> KeyUpEvent = delegate { };
 
-        IntPtr _hhook;
+        IntPtr _hhook = IntPtr.Zero;
 
 
         public Hook(string name)
@@ -43,7 +43,7 @@ namespace FMUtils.KeyboardHook
             Trace.WriteLine(string.Format("Starting hook '{0}'...", Name), string.Format("Hook.StartHook [{0}]", Thread.CurrentThread.Name));
 
             _hhook = Win32.SetWindowsHookEx(Win32.HookType.WH_KEYBOARD_LL, new Win32.HookProc(HookCallback), Win32.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName), 0);
-            if (_hhook == null || _hhook == IntPtr.Zero)
+            if (_hhook == IntPtr.Zero)
             {
                 Win32Exception LastError = new Win32Exception(Marshal.GetLastWin32Error());
             }
@@ -53,7 +53,15 @@ namespace FMUtils.KeyboardHook
         {
             Trace.WriteLine(string.Format("Stopping hook '{0}'...", Name), string.Format("Hook.StopHook [{0}]", Thread.CurrentThread.Name));
 
-            Win32.UnhookWindowsHookEx(_hhook);
+            if (_hhook == IntPtr.Zero)
+                return;
+
+            if (Win32.UnhookWindowsHookEx(_hhook) == 0)
+            {
+                Win32Exception LastError = new Win32Exception(Marshal.GetLastWin32Error());
+            }
+
+            _hhook = IntPtr.Zero;
         }
 
         private int HookCallback(int code, IntPtr wParam, ref Win32.KBDLLHOOKSTRUCT lParam)
@@ -80,6 +88,17 @@ namespace FMUtils.KeyboardHook
         }
 
         ~Hook()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool isDisposing)
         {
             StopHook();
         }

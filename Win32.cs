@@ -61,7 +61,7 @@ namespace FMUtils.KeyboardHook
         /// </summary>
         /// <param name="hhk">A handle to the hook to be removed. This parameter is a hook handle obtained by a previous call to SetWindowsHookEx.</param>
         /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern int UnhookWindowsHookEx(IntPtr hhk);
 
         /// <summary>
