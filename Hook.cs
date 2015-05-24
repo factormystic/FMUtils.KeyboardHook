@@ -76,11 +76,17 @@ namespace FMUtils.KeyboardHook
                     {
                         case Win32.WM_SYSKEYDOWN:
                         case Win32.WM_KEYDOWN:
-                            KeyDownEvent(this, new KeyboardHookEventArgs(lParam));
+                            foreach (EventHandler<KeyboardHookEventArgs> handler in KeyDownEvent.GetInvocationList())
+                            {
+                                handler.BeginInvoke(this, new KeyboardHookEventArgs(lParam), null, null);
+                            }
                             break;
                         case Win32.WM_SYSKEYUP:
                         case Win32.WM_KEYUP:
-                            KeyUpEvent(this, new KeyboardHookEventArgs(lParam));
+                            foreach (EventHandler<KeyboardHookEventArgs> handler in KeyUpEvent.GetInvocationList())
+                            {
+                                handler.BeginInvoke(this, new KeyboardHookEventArgs(lParam), null, null);
+                            }
                             break;
                     }
                 }
